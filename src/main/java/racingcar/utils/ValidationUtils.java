@@ -53,4 +53,12 @@ public class ValidationUtils {
         }
         return carList;
     }
+
+    public static boolean tryCountChk(String tryCount) {
+        String regex = "^[1-9]*$";
+        if (!tryCount.matches(regex)) {
+            throw new IllegalArgumentException(Message.ERROR_TRY_COUNT_NOT_NUMBER);
+        }
+        return true;
+    }
 }
