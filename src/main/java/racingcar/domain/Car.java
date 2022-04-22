@@ -12,6 +12,14 @@ public class Car {
         this.position = position;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public int getPosition() {
+        return this.position;
+    }
+
     public void move() {
         int no = generateRandomNo(GameConfig.MIN_RANDOM_NO, GameConfig.MAX_RANDOM_NO);
         if (isGo(no)) {
