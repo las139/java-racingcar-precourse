@@ -55,10 +55,17 @@ public class ValidationUtils {
     }
 
     public static boolean tryCountChk(String tryCount) {
-        String regex = "^[1-9]*$";
-        if (!tryCount.matches(regex)) {
+        if (!isNaturalNumber(tryCount)) {
             throw new IllegalArgumentException(Message.ERROR_TRY_COUNT_NOT_NUMBER);
         }
         return true;
+    }
+
+    public static boolean isNaturalNumber(String input) {
+        try {
+            return Integer.parseInt(input) > 0 ? true : false;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
