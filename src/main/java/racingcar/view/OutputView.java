@@ -31,4 +31,18 @@ public class OutputView {
         }
         return sb.toString();
     }
+
+    public static void printFinalWinner(List<Car> winnerList) {
+        System.out.print(Message.FINAL_WINNER_PREFIX);
+        for (int idx = 0; idx < winnerList.size(); idx++) {
+            System.out.print(addSeperator(idx) + winnerList.get(idx).getName());
+        }
+    }
+
+    private static String addSeperator(int index) {
+        if (index > 0) {
+            return GameConfig.CAR_NAME_SEPERATOR + " ";
+        }
+        return "";
+    }
 }

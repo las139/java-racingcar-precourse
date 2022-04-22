@@ -1,9 +1,11 @@
 package racingcar.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import racingcar.common.GameConfig;
+import racingcar.domain.Car;
 import racingcar.domain.Cars;
 import racingcar.domain.Round;
 import racingcar.view.InputView;
@@ -15,9 +17,20 @@ public class RaceGame {
         String carNames = InputView.inputCarNameView();
         int tryCount = Integer.parseInt(InputView.inputTryCountView());
 
-        List<String> carList = Arrays.asList(carNames.split(GameConfig.CAR_NAME_SEPERATOR));
+        List<Car> carList = stringToCarList(carNames);
         Cars cars = new Cars(carList);
         startRace(cars, tryCount);
+        result(cars);
+    }
+
+    public List<Car> stringToCarList(String carNames) {
+        List<String> carNameList = Arrays.asList(carNames.split(GameConfig.CAR_NAME_SEPERATOR));
+        List<Car> carList = new ArrayList<Car>();
+        for (String carName : carNameList) {
+            Car car = new Car(carName, GameConfig.BASE_CAR_POSITION);
+            carList.add(car);
+        }
+        return carList;
     }
 
     public void startRace(Cars cars, int tryCount) {
@@ -28,5 +41,10 @@ public class RaceGame {
             round.playedRound();
             OutputView.printRaceRound(cars);
         }
+    }
+
+    public void result(Cars cars) {
+        List<Car> winnerList = cars.winnerList();
+        OutputView.printFinalWinner(winnerList);
     }
 }

@@ -3,7 +3,7 @@ package racingcar.domain;
 import camp.nextstep.edu.missionutils.Randoms;
 import racingcar.common.GameConfig;
 
-public class Car {
+public class Car implements Comparable<Car> {
     private String name;
     private int position;
 
@@ -33,5 +33,14 @@ public class Car {
 
     public int generateRandomNo(int startNo, int endNo) {
         return Randoms.pickNumberInRange(startNo, endNo);
+    }
+
+    public boolean isEqualPosition(int maxPosition) {
+        return this.position == maxPosition;
+    }
+
+    @Override
+    public int compareTo(Car car) {
+        return this.position > car.getPosition() ? 1 : -1;
     }
 }
