@@ -6,14 +6,14 @@ import racingcar.common.GameConfig;
 import racingcar.domain.Car;
 import racingcar.domain.Cars;
 import racingcar.domain.Round;
-import racingcar.domain.TryCount;
+import racingcar.domain.RoundCount;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
 public class RaceGame {
     public void start() {
         Cars cars = inputCarName();
-        TryCount tryCount = inputTryCount();
+        RoundCount tryCount = inputTryCount();
         startRace(cars, tryCount);
         result(cars);
     }
@@ -28,17 +28,17 @@ public class RaceGame {
         }
     }
 
-    private TryCount inputTryCount() {
+    private RoundCount inputTryCount() {
         String input = InputView.inputTryCountView();
         try {
-            return new TryCount(input);
+            return new RoundCount(input);
         } catch (IllegalArgumentException e) {
             OutputView.printInputErrorMessage(e);
             return inputTryCount();
         }
     }
 
-    private void startRace(Cars cars, TryCount tryCount) {
+    private void startRace(Cars cars, RoundCount tryCount) {
         OutputView.printRoundResult();
         Round round = new Round(GameConfig.BASE_ROUND_COUNT);
         while (!round.isGameEnd(tryCount)) {

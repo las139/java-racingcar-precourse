@@ -25,7 +25,7 @@ public class RoundCountTest {
     @ValueSource(ints = { 1, 2, 3, 4, 5 })
     void 라운드_회차_시도횟수와_같은지_체크(int number) {
         RoundCount roundCount = new RoundCount(1);
-        assertThat(roundCount.isEqualTryCount(new TryCount("1"))).isTrue();
-        assertThat(roundCount.isEqualTryCount(new TryCount("2"))).isFalse();
+        assertThat(roundCount.isEqualTryCount(new RoundCount(1))).isTrue();
+        assertThat(roundCount.isEqualTryCount(new RoundCount(2))).isFalse();
     }
 }

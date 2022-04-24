@@ -11,7 +11,7 @@ public class Round {
         roundCount.addRoundCount();
     }
 
-    public boolean isGameEnd(TryCount tryCount) {
+    public boolean isGameEnd(RoundCount tryCount) {
         return roundCount.isEqualTryCount(tryCount);
     }
 }
