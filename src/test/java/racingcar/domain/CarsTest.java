@@ -65,6 +65,6 @@ public class CarsTest {
     @DisplayName("우승자_인원수_체크")
     void 우승자_인원수_체크() {
         cars.move();
-        assertThat(cars.winnerList().size() > 0).isTrue();
+        assertThat(cars.findWinners().size() > 0).isTrue();
     }
 }

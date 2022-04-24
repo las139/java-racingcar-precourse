@@ -10,17 +10,17 @@ import racingcar.common.GameConfig;
 import racingcar.common.Message;
 
 public class Cars {
-    private List<Car> carList;
+    private List<Car> cars;
 
     public Cars(String carNames) {
         List<String> carNameList = Arrays.asList(carNames.split(GameConfig.CAR_NAME_SEPERATOR));
         validateCount(carNameList);
         validateDuplicate(carNameList);
-        this.carList = mapCars(carNameList);
+        this.cars = mapCars(carNameList);
     }
 
-    public List<Car> getCarList() {
-        return this.carList;
+    public List<Car> getCars() {
+        return this.cars;
     }
 
     private boolean validateCount(List<String> carNameList) {
@@ -39,30 +39,28 @@ public class Cars {
     }
 
     public List<Car> mapCars(List<String> carNameList) {
-        List<Car> carList = new ArrayList<Car>();
+        List<Car> cars = new ArrayList<Car>();
         for (String carName : carNameList) {
             Car car = new Car(carName, GameConfig.BASE_CAR_POSITION);
-            carList.add(car);
+            cars.add(car);
         }
-        return carList;
+        return cars;
     }
 
     public void move() {
-        carList.forEach(Car::move);
+        cars.forEach(Car::move);
     }
 
-    public List<Car> winnerList() {
-        List<Car> winnerList = new ArrayList<Car>();
-        Position maxPosition = Collections.max(carList).getPosition();
-        for (Car car : carList) {
-            addWinnerCar(winnerList, car, maxPosition);
-        }
-        return winnerList;
+    public List<Car> findWinners() {
+        List<Car> winners = new ArrayList<Car>();
+        Position maxPosition = Collections.max(cars).getPosition();
+        cars.forEach(car -> addWinnerCar(winners, car, maxPosition));
+        return winners;
     }
 
-    public void addWinnerCar(List<Car> winnerList, Car car, Position maxPosition) {
+    public void addWinnerCar(List<Car> winners, Car car, Position maxPosition) {
         if (car.getPosition().isEqualPosition(maxPosition)) {
-            winnerList.add(car);
+            winners.add(car);
         }
     }
 }

@@ -17,7 +17,7 @@ public class OutputView {
     }
 
     public static void printRaceRound(Cars cars) {
-        List<Car> carList = cars.getCarList();
+        List<Car> carList = cars.getCars();
         for (int idx = 0; idx < carList.size(); idx++) {
             System.out.println(carList.get(idx).getName().getName() + " : " + printMoveDistance(carList.get(idx)));
         }
@@ -32,10 +32,10 @@ public class OutputView {
         return sb.toString();
     }
 
-    public static void printFinalWinner(List<Car> winnerList) {
+    public static void printFinalWinner(List<Car> winners) {
         System.out.print(Message.FINAL_WINNER_PREFIX);
-        for (int idx = 0; idx < winnerList.size(); idx++) {
-            System.out.print(addSeperator(idx) + winnerList.get(idx).getName().getName());
+        for (int idx = 0; idx < winners.size(); idx++) {
+            System.out.print(addSeperator(idx) + winners.get(idx).getName().getName());
         }
     }
 
