@@ -18,31 +18,24 @@ public class OutputView {
 
     public static void printRaceRound(Cars cars) {
         List<Car> carList = cars.getCars();
-        for (int idx = 0; idx < carList.size(); idx++) {
-            System.out.println(carList.get(idx).getName().getName() + " : " + printMoveDistance(carList.get(idx)));
-        }
+        carList.forEach(car -> System.out.println(car.getName().getName() + " : " + printMoveDistance(car)));
         System.out.println();
     }
 
     private static String printMoveDistance(Car car) {
         StringBuilder sb = new StringBuilder();
-        for (int idx = 0; idx < car.getPosition().getPosition(); idx++) {
+        for (int index = 0; index < car.getPosition().getPosition(); index++) {
             sb.append(GameConfig.MOVE_DISPLAY);
         }
         return sb.toString();
     }
 
-    public static void printFinalWinner(List<Car> winners) {
+    public static void printFinalWinner(List<Car> winnerList) {
         System.out.print(Message.FINAL_WINNER_PREFIX);
-        for (int idx = 0; idx < winners.size(); idx++) {
-            System.out.print(addSeperator(idx) + winners.get(idx).getName().getName());
-        }
+        winnerList.forEach(car -> System.out.print(addSeperator(winnerList.indexOf(car)) + car.getName().getName()));
     }
 
     private static String addSeperator(int index) {
-        if (index > 0) {
-            return GameConfig.CAR_NAME_SEPERATOR + " ";
-        }
-        return "";
+        return index > 0 ? GameConfig.CAR_NAME_SEPERATOR + " " : "";
     }
 }
