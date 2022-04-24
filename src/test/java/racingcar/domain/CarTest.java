@@ -44,24 +44,16 @@ public class CarTest {
     @Test
     @DisplayName("자동차_위치_비교_체크")
     void 자동차_위치_비교_체크() {
-        Car slowCar = new Car("pobi", 1);
-        Car fastCar = new Car("toyo", 2);
-        assertThat(fastCar.compareTo(slowCar)).isEqualTo(1);
+        Car pobiCar = new Car("pobi", 2);
+        Car toyoCar = new Car("toyo", 1);
+        assertThat(pobiCar.compareTo(toyoCar)).isEqualTo(1);
     }
 
     @Test
     @DisplayName("자동차_위치_동일할때_비교_체크")
     void 자동차_위치_동일할때_비교_체크() {
-        Car slowCar = new Car("pobi", 2);
-        Car fastCar = new Car("toyo", 2);
-        assertThat(fastCar.compareTo(slowCar)).isEqualTo(-1);
-    }
-
-    @Test
-    @DisplayName("자동차_위치_동일한지_체크")
-    void 자동차_위치_동일한지_체크() {
-        Car car = new Car("pobi", 2);
-        assertThat(car.isEqualPosition(1)).isFalse();
-        assertThat(car.isEqualPosition(2)).isTrue();
+        Car pobiCar = new Car("pobi", 2);
+        Car toyoCar = new Car("toyo", 2);
+        assertThat(pobiCar.compareTo(toyoCar)).isEqualTo(-1);
     }
 }

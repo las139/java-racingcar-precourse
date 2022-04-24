@@ -11,10 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RoundTest {
     @ParameterizedTest
     @DisplayName("게임_종료_체크")
-    @ValueSource(ints = { 1, 2, 3, 4, 5 })
-    void 게임_종료_체크(int tryCount) {
+    @ValueSource(strings = { "1", "2", "3", "4", "5" })
+    void 게임_종료_체크(String number) {
         Round round = new Round(GameConfig.BASE_ROUND_COUNT);
-        for (int count = 0; count < tryCount; count++) {
+        TryCount tryCount = new TryCount(number);
+        for (int count = 0; count < tryCount.getTryCount(); count++) {
             round.playedRound();
         }
         assertThat(round.isGameEnd(tryCount)).isTrue();

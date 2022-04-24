@@ -1,17 +1,17 @@
 package racingcar.domain;
 
 public class Round {
-    private int roundCount;
+    private RoundCount roundCount;
 
     public Round(int roundCount) {
-        this.roundCount = roundCount;
-    }
-
-    public boolean isGameEnd(int tryCount) {
-        return roundCount == tryCount;
+        this.roundCount = new RoundCount(roundCount);
     }
 
     public void playedRound() {
-        roundCount++;
+        roundCount.addRoundCount();
+    }
+
+    public boolean isGameEnd(TryCount tryCount) {
+        return roundCount.isEqualTryCount(tryCount);
     }
 }

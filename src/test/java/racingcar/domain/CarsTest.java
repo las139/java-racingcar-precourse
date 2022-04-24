@@ -9,43 +9,62 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import racingcar.common.Message;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CarsTest {
-    List<Car> carList;
+    Cars cars;
 
     @BeforeEach
     void init() {
-        carList = new ArrayList<Car>();
-        carList.add(new Car("pobi", 3));
-        carList.add(new Car("toyo", 3));
-        carList.add(new Car("asora", 2));
+        String carNames = "pobi,toyo,asora";
+        cars = new Cars(carNames);
+    }
+
+    @ParameterizedTest
+    @DisplayName("자동차_입력_갯수_체크")
+    @ValueSource(strings = { "pobi", "crong", "pobi," })
+    void 자동차_이름_입력_갯수_체크(String carNames) {
+        assertThatThrownBy(() -> {
+            new Cars(carNames);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Message.ERROR_MIN_CAR_COUNT);
+    }
+
+    @ParameterizedTest
+    @DisplayName("자동차_중복_체크")
+    @ValueSource(strings = { "pobi,crong,pobi,honux", "joseh,suara,doyo,suara" })
+    void 자동차_이름_중복_체크(String carNames) {
+        assertThatThrownBy(() -> {
+            new Cars(carNames);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Message.ERROR_CAR_NOT_UNIQUE);
     }
 
     @ParameterizedTest
     @DisplayName("우승자_리스트에_자동차_포함_O_체크")
-    @ValueSource(ints = { 3, 4, 5 })
+    @ValueSource(ints = { 3 })
     void 우승자_리스트에_자동차_포함_O_체크(int maxPosition) {
         List<Car> winnerList = new ArrayList<Car>();
-        Cars cars = new Cars(carList);
-        cars.addWinnerCar(winnerList, new Car("toyo", 3), maxPosition);
-        assertThat(cars.getCarList().size() > 0).isTrue();
+        cars.addWinnerCar(winnerList, new Car("toyo", 3), new Position(maxPosition));
+        assertThat(winnerList.size() > 0).isTrue();
     }
 
     @ParameterizedTest
     @DisplayName("우승자_리스트에_자동차_포함_X_체크")
-    @ValueSource(ints = { 0, 1, 2 })
+    @ValueSource(ints = { 4, 5, 6 })
     void 우승자_리스트에_자동차_포함_X_체크(int maxPosition) {
         List<Car> winnerList = new ArrayList<Car>();
-        Cars cars = new Cars(carList);
-        cars.addWinnerCar(winnerList, new Car("toyo", 3), maxPosition);
-        assertThat(cars.getCarList().size() > 0).isTrue();
+        cars.addWinnerCar(winnerList, new Car("toyo", 3), new Position(maxPosition));
+        assertThat(winnerList.size() > 0).isFalse();
     }
 
     @Test
     @DisplayName("우승자_인원수_체크")
     void 우승자_인원수_체크() {
-        Cars cars = new Cars(carList);
-        assertThat(cars.winnerList().size() == 2).isTrue();
+        cars.move();
+        assertThat(cars.winnerList().size() > 0).isTrue();
     }
 }

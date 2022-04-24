@@ -4,26 +4,26 @@ import camp.nextstep.edu.missionutils.Randoms;
 import racingcar.common.GameConfig;
 
 public class Car implements Comparable<Car> {
-    private String name;
-    private int position;
+    private Name name;
+    private Position position;
 
     public Car(String name, int position) {
-        this.name = name;
-        this.position = position;
+        this.name = new Name(name);
+        this.position = new Position(position);
     }
 
-    public String getName() {
+    public Name getName() {
         return this.name;
     }
 
-    public int getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 
     public void move() {
         int no = generateRandomNo(GameConfig.MIN_RANDOM_NO, GameConfig.MAX_RANDOM_NO);
         if (isGo(no)) {
-            position++;
+            position.increasePosition();
         }
     }
 
@@ -35,12 +35,8 @@ public class Car implements Comparable<Car> {
         return Randoms.pickNumberInRange(startNo, endNo);
     }
 
-    public boolean isEqualPosition(int maxPosition) {
-        return this.position == maxPosition;
-    }
-
     @Override
     public int compareTo(Car car) {
-        return this.position > car.getPosition() ? 1 : -1;
+        return position.isFrontPosition(car.getPosition()) ? 1 : -1;
     }
 }

@@ -8,42 +8,37 @@ import racingcar.common.GameConfig;
 import racingcar.domain.Car;
 import racingcar.domain.Cars;
 import racingcar.domain.Round;
-import racingcar.utils.ValidationUtils;
+import racingcar.domain.TryCount;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
 public class RaceGame {
 
     public void start() {
-        String carNames = inputCarName();
-        int tryCount = Integer.parseInt(inputTryCount());
-
-        List<Car> carList = stringToCarList(carNames);
-        Cars cars = new Cars(carList);
-        startRace(cars, tryCount);
-        result(cars);
+        Cars carList = inputCarName();
+        TryCount tryCount = inputTryCount();
+        startRace(carList, tryCount);
+        result(carList);
     }
 
-    private String inputCarName() {
-        String carName = InputView.inputCarNameView();
+    private Cars inputCarName() {
+        String input = InputView.inputCarNameView();
         try {
-            ValidationUtils.carNameAllChk(carName);
+            return new Cars(input);
         } catch (IllegalArgumentException e) {
             OutputView.printInputErrorMessage(e);
-            inputCarName();
+            return inputCarName();
         }
-        return carName;
     }
 
-    private String inputTryCount() {
-        String tryCount = InputView.inputTryCountView();
+    private TryCount inputTryCount() {
+        String input = InputView.inputTryCountView();
         try {
-            ValidationUtils.tryCountChk(tryCount);
+            return new TryCount(input);
         } catch (IllegalArgumentException e) {
             OutputView.printInputErrorMessage(e);
-            inputTryCount();
+            return inputTryCount();
         }
-        return tryCount;
     }
 
     public List<Car> stringToCarList(String carNames) {
@@ -56,7 +51,7 @@ public class RaceGame {
         return carList;
     }
 
-    public void startRace(Cars cars, int tryCount) {
+    public void startRace(Cars cars, TryCount tryCount) {
         OutputView.printRoundResult();
         Round round = new Round(GameConfig.BASE_ROUND_COUNT);
         while (!round.isGameEnd(tryCount)) {

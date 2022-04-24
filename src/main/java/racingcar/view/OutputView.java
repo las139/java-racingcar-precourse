@@ -19,14 +19,14 @@ public class OutputView {
     public static void printRaceRound(Cars cars) {
         List<Car> carList = cars.getCarList();
         for (int idx = 0; idx < carList.size(); idx++) {
-            System.out.println(carList.get(idx).getName() + " : " + printMoveDistance(carList.get(idx)));
+            System.out.println(carList.get(idx).getName().getName() + " : " + printMoveDistance(carList.get(idx)));
         }
         System.out.println();
     }
 
     private static String printMoveDistance(Car car) {
         StringBuilder sb = new StringBuilder();
-        for (int idx = 0; idx < car.getPosition(); idx++) {
+        for (int idx = 0; idx < car.getPosition().getPosition(); idx++) {
             sb.append(GameConfig.MOVE_DISPLAY);
         }
         return sb.toString();
@@ -35,7 +35,7 @@ public class OutputView {
     public static void printFinalWinner(List<Car> winnerList) {
         System.out.print(Message.FINAL_WINNER_PREFIX);
         for (int idx = 0; idx < winnerList.size(); idx++) {
-            System.out.print(addSeperator(idx) + winnerList.get(idx).getName());
+            System.out.print(addSeperator(idx) + winnerList.get(idx).getName().getName());
         }
     }
 
