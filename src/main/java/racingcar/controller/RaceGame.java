@@ -8,19 +8,42 @@ import racingcar.common.GameConfig;
 import racingcar.domain.Car;
 import racingcar.domain.Cars;
 import racingcar.domain.Round;
+import racingcar.utils.ValidationUtils;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
 public class RaceGame {
 
     public void start() {
-        String carNames = InputView.inputCarNameView();
-        int tryCount = Integer.parseInt(InputView.inputTryCountView());
+        String carNames = inputCarName();
+        int tryCount = Integer.parseInt(inputTryCount());
 
         List<Car> carList = stringToCarList(carNames);
         Cars cars = new Cars(carList);
         startRace(cars, tryCount);
         result(cars);
+    }
+
+    private String inputCarName() {
+        String carName = InputView.inputCarNameView();
+        try {
+            ValidationUtils.carNameAllChk(carName);
+        } catch (IllegalArgumentException e) {
+            OutputView.printInputErrorMessage(e);
+            inputCarName();
+        }
+        return carName;
+    }
+
+    private String inputTryCount() {
+        String tryCount = InputView.inputTryCountView();
+        try {
+            ValidationUtils.tryCountChk(tryCount);
+        } catch (IllegalArgumentException e) {
+            OutputView.printInputErrorMessage(e);
+            inputTryCount();
+        }
+        return tryCount;
     }
 
     public List<Car> stringToCarList(String carNames) {
